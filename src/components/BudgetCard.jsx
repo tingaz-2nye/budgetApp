@@ -11,16 +11,15 @@ const BudgetCard = ({
   handleOpenAdd,
   budget,
   setExpenseCategory,
-  id,
   handleDeleteBudget,
 }) => {
-  const { title, budget_total, expense_total, expenses } = budget;
+  const { id, title, budget_total, expense_total, expenses } = budget;
   const [percentage, setPercentage] = useState(null);
 
   const [color, setColor] = useState(colors.blue);
 
-  const handleDelete = (idd) => {
-    handleDeleteBudget(idd);
+  const handleDelete = (id) => {
+    handleDeleteBudget(id);
   };
 
   useEffect(() => {
@@ -55,7 +54,7 @@ const BudgetCard = ({
         <button
           onClick={() => {
             handleOpenAdd();
-            setExpenseCategory(title);
+            setExpenseCategory(id);
           }}
           className="p-2 rounded-2xl uppercase text-sm bg-red-900 hover:bg-red-700"
         >
@@ -64,7 +63,7 @@ const BudgetCard = ({
         <button
           onClick={() => {
             handleOpenView();
-            setExpenseCategory(title);
+            setExpenseCategory(id);
           }}
           className="text-gray-400 rounded-2xl p-2 border border-red-900 hover:border-red-700 uppercase text-sm hover:text-gray-300"
         >

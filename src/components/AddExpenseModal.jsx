@@ -10,7 +10,7 @@ const AddExpenseModal = ({
   const [formValues, setFormValues] = useState({
     description: '',
     amount: 0,
-    budgetName: '',
+    budgetID: '',
   });
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -21,12 +21,13 @@ const AddExpenseModal = ({
 
     handleSubmit({
       ...formValues,
-      budgetName: expense ? expense : formValues.budgetName,
+      budgetName: expense.id ? expense.id : formValues.budgetID,
+      budgetID: expense.id ? expense.id : formValues.budgetID,
     });
     setFormValues({
       description: '',
       amount: 0,
-      budgetName: '',
+      budgetID: '',
     });
   };
 
@@ -112,26 +113,28 @@ const AddExpenseModal = ({
                             Budget
                           </label>
                           {expense ? (
-                            <input
-                              type="text"
-                              name="budgetName"
-                              id="budgetName"
-                              value={expense}
-                              className="appearance-none mt-2 bg-slate-900 border-gray-400 border-2 p-2 rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
+                            <>
+                              <input
+                                type="text"
+                                name="budgetName"
+                                id="budgetName"
+                                value={expense.title}
+                                className="appearance-none mt-2 bg-slate-900 border-gray-400 border-2 p-2 rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
                             "
-                              disabled
-                            />
+                                disabled
+                              />
+                            </>
                           ) : (
                             <select
                               onChange={handleChange}
-                              name="budgetName"
-                              id="budgetName"
-                              value={formValues.budgetName}
+                              name="budgetID"
+                              id="budgetID"
+                              value={formValues.budgetID}
                               className="appearance-none w-full mt-2 bg-slate-900 border-gray-400 border-2 p-2 rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
                           "
                             >
                               {budgets.map((budget, index) => (
-                                <option key={index} value={budget.title}>
+                                <option key={index} value={budget.id}>
                                   {budget.title}
                                 </option>
                               ))}

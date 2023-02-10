@@ -68,7 +68,7 @@ const ExpenseModal = ({
                             <button
                               className="cursor-pointer hover:text-red-600 hover:rounded-lg hover:w-6 hover:h-6"
                               onClick={() =>
-                                handleDelete(index, expenses[0]?.title)
+                                handleDelete(expense.id, expenses[0]?.id)
                               }
                             >
                               <svg

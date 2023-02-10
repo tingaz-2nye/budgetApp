@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import AddBudgetModal from './components/AddBudgetModal';
 import AddExpenseModal from './components/AddExpenseModal';
 import BudgetCard from './components/BudgetCard';
@@ -28,24 +29,28 @@ function App() {
     year: '2023',
     budgets: [
       {
+        id: uuidv4(),
         title: 'Entertainment',
         expenses: [],
         budget_total: 5000,
         expense_total: 0,
       },
       {
+        id: uuidv4(),
         title: 'Food',
         expenses: [],
         budget_total: 2000,
         expense_total: 0,
       },
       {
+        id: uuidv4(),
         title: 'Transportation',
         expenses: [],
         budget_total: 2000,
         expense_total: 0,
       },
       {
+        id: uuidv4(),
         title: 'Rental Services',
         expenses: [],
         budget_total: 2000,
@@ -61,15 +66,15 @@ function App() {
   const handleOpenAddExpenseModal = () => setAddExpense(true);
   const handleCloseAddExpenseModal = () => setAddExpense(false);
 
-  const addSum = ({ budgetName, amount = 0, id = 0, isSum = true }) => {
+  const addSum = ({ budgetID, amount = 0, id = 0, isSum = true }) => {
     let sum = 0;
 
     const expenses = budgets.budgets.filter(
-      (budget) => budget.title === budgetName
-    )[0].expenses;
+      (budget) => budget.id === budgetID
+    )[0]?.expenses;
 
     if (!isSum) {
-      const newExpenses = expenses.filter((expense, index) => index !== id);
+      const newExpenses = expenses.filter((expense) => expense.id !== id);
 
       for (const n of newExpenses) {
         sum += n.amount;
@@ -86,6 +91,7 @@ function App() {
   const handleAddBudgetForm = (formValues) => {
     const { name, amount } = formValues;
     const obj = {
+      id: uuidv4(),
       title: name,
       expenses: [],
       budget_total: amount,
@@ -100,19 +106,20 @@ function App() {
   };
 
   const handleAddExpenseForm = (formValues) => {
-    const { description, amount, budgetName } = formValues;
+    const { description, amount, budgetID } = formValues;
     const obj = {
+      id: uuidv4(),
       description,
       amount: parseFloat(amount),
-      budgetName,
+      budgetID,
     };
 
-    const sum = addSum({ budgetName, amount });
+    const sum = addSum({ budgetID, amount });
 
     setBudgets({
       ...budgets,
       ['budgets']: budgets.budgets.map((budget) => {
-        return budget.title === budgetName
+        return budget.id === budgetID
           ? {
               ...budget,
               ['expenses']: [...budget.expenses, obj],
@@ -125,18 +132,18 @@ function App() {
     handleCloseAddExpenseModal();
   };
 
-  const handleDeleteExpense = (id, budgetName) => {
+  const handleDeleteExpense = (id, budgetID) => {
     const expense = budgets.budgets.filter(
-      (budget) => budget.title === budgetName
+      (budget) => budget.id === budgetID
     )[0];
-    const expenses = expense.expenses.filter((exp, index) => index !== id);
+    const expenses = expense.expenses.filter((exp) => exp.id !== id);
 
-    const sum = addSum({ budgetName, isSum: false, id });
+    const sum = addSum({ budgetID, isSum: false, id });
 
     setBudgets({
       ...budgets,
       ['budgets']: budgets.budgets.map((budget) => {
-        return budget.title === budgetName
+        return budget.id === budgetID
           ? {
               ...budget,
               ['expenses']: expenses,
@@ -148,7 +155,7 @@ function App() {
   };
 
   const handleDeleteBudget = (id) => {
-    const newBudgets = budgets.budgets.filter((budget, index) => index !== id);
+    const newBudgets = budgets.budgets.filter((budget) => budget.id !== id);
     setBudgets({
       ...budgets,
       ['budgets']: newBudgets,
@@ -165,13 +172,12 @@ function App() {
         <div className="w-full bg-slate-600 grid grid-cols-3 gap-4 pt-10 px-4">
           {budgets.budgets.map((budget, index) => (
             <BudgetCard
-              key={index}
+              key={budget.id}
               budget={budget}
               handleOpenView={handleOpenViewExpenseModal}
               handleOpenAdd={handleOpenAddExpenseModal}
               setExpenseCategory={setExpenseCategory}
               handleDeleteBudget={handleDeleteBudget}
-              id={index}
             />
           ))}
         </div>
@@ -179,7 +185,7 @@ function App() {
           open={viewExpense}
           handleCloseModal={handleCloseViewExpenseModal}
           expenses={budgets.budgets.filter(
-            (budget) => budget.title === expenseCategory
+            (budget) => budget.id === expenseCategory
           )}
           handleDeleteExpense={handleDeleteExpense}
         />
@@ -192,7 +198,9 @@ function App() {
           open={addExpense}
           handleSubmit={handleAddExpenseForm}
           budgets={budgets.budgets}
-          expense={expenseCategory}
+          expense={
+            budgets.budgets.filter((budget) => budget.id === expenseCategory)[0]
+          }
           handleCloseModal={handleCloseAddExpenseModal}
         />
       </div>
