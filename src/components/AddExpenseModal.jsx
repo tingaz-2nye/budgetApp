@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
+import { toast } from "react-toastify";
 
 const AddExpenseModal = ({
   open,
@@ -46,7 +47,7 @@ const AddExpenseModal = ({
       formValues.amount === "" ||
       formValues.date === ""
     )
-      return;
+      return toast.error("Please fill in all field");
 
     handleSubmit({
       ...formValues,

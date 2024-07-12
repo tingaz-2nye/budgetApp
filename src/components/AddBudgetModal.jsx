@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
+import { toast } from "react-toastify";
 
 const AddBudgetModal = ({ open, handleCloseModal, handleSubmit }) => {
   const [value, setValue] = useState({
@@ -48,7 +49,7 @@ const AddBudgetModal = ({ open, handleCloseModal, handleSubmit }) => {
       formValues.amount === "" ||
       formValues.fullDate === ""
     )
-      return;
+      return toast.error("Please fill in all field");
 
     handleSubmit(formValues);
 
