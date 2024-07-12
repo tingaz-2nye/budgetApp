@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const AddExpenseModal = ({
   open,
@@ -8,16 +8,16 @@ const AddExpenseModal = ({
   expense,
 }) => {
   const [formValues, setFormValues] = useState({
-    description: '',
+    description: "",
     amount: 0,
-    budgetID: '',
+    budgetID: "",
   });
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
   const handleForm = (e) => {
     e.preventDefault();
-    if (formValues.name === '' || formValues.amount === '') return;
+    if (formValues.name === "" || formValues.amount === "") return;
 
     handleSubmit({
       ...formValues,
@@ -25,9 +25,9 @@ const AddExpenseModal = ({
       budgetID: expense.id ? expense.id : formValues.budgetID,
     });
     setFormValues({
-      description: '',
+      description: "",
       amount: 0,
-      budgetID: '',
+      budgetID: "",
     });
   };
 
@@ -35,7 +35,7 @@ const AddExpenseModal = ({
     <>
       <div
         className={`relative z-10 ${
-          !open ? 'hidden' : 'flex'
+          !open ? "hidden" : "flex"
         } transition ease-in-out duration-300 delay-75`}
         aria-labelledby="modal-title"
         role="dialog"
@@ -88,7 +88,7 @@ const AddExpenseModal = ({
                             name="description"
                             onChange={handleChange}
                             value={formValues.description}
-                            className="bg-slate-900 mt-2 border-gray-400 border-2 p-2 rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900  focus-within:bg-slate-900"
+                            className="bg-slate-900 mt-2 border-gray-400 border-2 p-2 w-full rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900  focus-within:bg-slate-900"
                             placeholder="Description"
                           />
                         </div>
@@ -103,7 +103,7 @@ const AddExpenseModal = ({
                             name="amount"
                             onChange={handleChange}
                             value={formValues.amount}
-                            className="appearance-none mt-2 bg-slate-900 border-gray-400 border-2 p-2 rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
+                            className="appearance-none mt-2 bg-slate-900 border-gray-400 border-2 p-2 w-full rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
                             "
                             placeholder="Amount"
                           />
@@ -119,7 +119,7 @@ const AddExpenseModal = ({
                                 name="budgetName"
                                 id="budgetName"
                                 value={expense.title}
-                                className="appearance-none mt-2 bg-slate-900 border-gray-400 border-2 p-2 rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
+                                className="appearance-none mt-2 bg-slate-900 border-gray-400 border-2 p-2 w-full rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
                             "
                                 disabled
                               />
@@ -130,7 +130,7 @@ const AddExpenseModal = ({
                               name="budgetID"
                               id="budgetID"
                               value={formValues.budgetID}
-                              className="appearance-none w-full mt-2 bg-slate-900 border-gray-400 border-2 p-2 rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
+                              className="appearance-none w-full mt-2 bg-slate-900 border-gray-400 border-2 p-2 w-full rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
                           "
                             >
                               {budgets.map((budget, index) => (
