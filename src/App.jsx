@@ -202,7 +202,7 @@ function App() {
           ))}
         </div>
 
-        <div className="w-72 md:w-96 h-16 md:h-20 rounded-full bg-slate-900 fixed bottom-4 right-5 shadow-lg text-gray-400 justify-center flex items-center px-4 text-xl font-bold">
+        <div className="w-full md:w-96 h-16 md:h-20 md:rounded-full bg-slate-900 fixed bottom-0 md:bottom-4 md:right-5 shadow-lg text-gray-400 justify-center flex items-center px-4 text-xl font-bold">
           <div className="text-lg md:text-xl">Total :</div>
           <div className="px-4 text-lg md:text-2xl text-gray-300">{`${overallExpenseTotal()} / ${overallBudgetTotal()}`}</div>
         </div>
