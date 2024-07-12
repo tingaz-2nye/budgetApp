@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* .tooltip {
+  @apply invisible absolute;
+  padding: 2px;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}
+
+.tooltip-arrow {
+  position: absolute;
+  bottom: -5px; /* Position the arrow below the tooltip */
+/* transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #e11d48; /* Match the tooltip's background color */
+/* }   */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-trigger {
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 100%; /* Position above the trigger */
+  left: 50%;
+  width: 100px !important;
+  transform: translateX(-50%);
+  margin-bottom: 10px; /* Adjust as needed */
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.2s linear;
+}
+
+.tooltip-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-arrow {
+  position: absolute;
+  top: 100%; /* Position the arrow at the bottom of the tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #e11d48; /* Match the tooltip's background color */
+}
+
 * {
   margin: 0;
   padding: 0;

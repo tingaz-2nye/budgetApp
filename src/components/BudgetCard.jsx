@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { eyeIcon, plusIcon, trashIcon } from "../utils/icons";
+import { EyeIcon, PlusIcon, TrashIcon } from "../utils/icons";
+import TooltipComponent from "./TooltipComponent";
 
 const colors = {
   red: "bg-red-600",
@@ -74,48 +75,31 @@ const BudgetCard = ({
             handleOpenAdd();
             setExpenseCategory(id);
           }}
-          className="p-2 hidden md:block rounded-2xl uppercase text-sm bg-red-900 hover:bg-red-700"
+          className="text-sm relative text-gray-300 hover:text-rose-600"
         >
-          Add Expense
+          <TooltipComponent text={"Add Expense"}>
+            <PlusIcon />
+          </TooltipComponent>
         </button>
-        <button
-          onClick={() => {
-            handleOpenAdd();
-            setExpenseCategory(id);
-          }}
-          className="p-2 flex md:hidden rounded-2xl text-xs"
-        >
-          {plusIcon}
-        </button>
+
         <button
           onClick={() => {
             handleOpenView();
             setExpenseCategory(id);
           }}
-          className="text-gray-400 hidden md:block rounded-2xl p-2 border border-red-900 hover:border-red-700 uppercase text-sm hover:text-gray-300"
+          className="text-sm text-gray-300 hover:text-rose-600"
         >
-          View Expenses
+          <TooltipComponent text={"View Expense"}>
+            <EyeIcon />
+          </TooltipComponent>
         </button>
         <button
-          onClick={() => {
-            handleOpenView();
-            setExpenseCategory(id);
-          }}
-          className="p-2 flex md:hidden text-xs rounded-2xl"
-        >
-          {eyeIcon}
-        </button>
-        <button
-          className="text-gray-400 hidden md:block uppercase text-sm hover:text-gray-300"
+          className="text-sm text-gray-300 hover:text-rose-600"
           onClick={() => handleDelete(id)}
         >
-          Delete
-        </button>
-        <button
-          className="p-2 flex md:hidden text-xs rounded-2xl"
-          onClick={() => handleDelete(id)}
-        >
-          {trashIcon}
+          <TooltipComponent text={"Delete Budget"}>
+            <TrashIcon />
+          </TooltipComponent>
         </button>
       </div>
     </div>
