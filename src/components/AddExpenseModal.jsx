@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Datepicker from "react-tailwindcss-datepicker";
 
 const AddExpenseModal = ({
   open,
@@ -7,28 +8,52 @@ const AddExpenseModal = ({
   budgets,
   expense,
 }) => {
+  const [value, setValue] = useState({
+    startDate: null,
+    endDate: null,
+  });
   const [formValues, setFormValues] = useState({
     description: "",
     amount: 0,
     budgetID: "",
+    date: "",
   });
+
+  const resetValues = () => {
+    setValue({ startDate: null, endDate: null });
+    setFormValues({
+      description: "",
+      amount: 0,
+      budgetID: "",
+      date: "",
+    });
+  };
+
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
+
+  const handleValueChange = (newValue) => {
+    const { startDate } = newValue;
+    setValue(newValue);
+    setFormValues({ ...formValues, date: startDate });
+  };
+
   const handleForm = (e) => {
     e.preventDefault();
-    if (formValues.name === "" || formValues.amount === "") return;
+    if (
+      formValues.name === "" ||
+      formValues.amount === "" ||
+      formValues.date === ""
+    )
+      return;
 
     handleSubmit({
       ...formValues,
       budgetName: expense.id ? expense.id : formValues.budgetID,
       budgetID: expense.id ? expense.id : formValues.budgetID,
     });
-    setFormValues({
-      description: "",
-      amount: 0,
-      budgetID: "",
-    });
+    resetValues();
   };
 
   return (
@@ -44,8 +69,8 @@ const AddExpenseModal = ({
         <div className="fixed inset-0 bg-gray-500 bg-opacity-30 transition-opacity"></div>
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div className="relative transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-60 sm:max-w-lg">
-              <div className="bg-slate-900  h-[700px] sm:h-[420px] overflow-x-hidden overflow-y-hidden">
+            <div className="relative transform overflow-visible rounded-lg text-left shadow-xl transition-all sm:my-8 md:w-[800px] sm:max-w-lg">
+              <div className="bg-slate-900 h-[510px] md:h-[500px] overflow-visible">
                 <div className="sm:flex sm:items-start ">
                   <div className="mt-3 w-full text-center sm:mt-0 p-2 sm:text-left text-gray-300">
                     <div className="flex gap-8 md:gap-5 justify-between items-center px-2 py-2">
@@ -106,6 +131,24 @@ const AddExpenseModal = ({
                             className="appearance-none mt-2 bg-slate-900 border-gray-400 border-2 p-2 w-full rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
                             "
                             placeholder="Amount"
+                          />
+                        </div>
+                        {/* Date */}
+                        <div className="">
+                          <label htmlFor="date" className="text-sm">
+                            Date
+                          </label>
+                          <Datepicker
+                            displayFormat={"MM-YYYY"}
+                            useRange={false}
+                            asSingle={true}
+                            showShortcuts={false}
+                            value={value}
+                            onChange={handleValueChange}
+                            inputClassName="appearance-none bg-slate-900 border-gray-400 border-2 p-2 w-full rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900"
+                            classNames={{
+                              popover: "absolute z-50",
+                            }}
                           />
                         </div>
                         <div className="">
