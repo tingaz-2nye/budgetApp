@@ -1,29 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import Datepicker from "react-tailwindcss-datepicker";
 
 const AddBudgetModal = ({ open, handleCloseModal, handleSubmit }) => {
-  const [formValues, setFormValues] = useState({
-    name: '',
-    amount: '',
+  const [value, setValue] = useState({
+    startDate: null,
+    endDate: null,
   });
+  const [formValues, setFormValues] = useState({
+    name: "",
+    amount: "",
+    fullDate: "",
+    month: "",
+    year: "",
+  });
+
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
+
+  const resetValues = () => {
+    setValue({ startDate: null, endDate: null });
+    setFormValues({
+      name: "",
+      amount: "",
+      fullDate: "",
+      month: "",
+      year: "",
+    });
+  };
+
+  const handleValueChange = (newValue) => {
+    const { startDate } = newValue;
+    const month = new Date(startDate).toLocaleString("default", {
+      month: "short",
+    });
+    const year = new Date(startDate).toLocaleString("default", {
+      year: "numeric",
+    });
+    setValue(newValue);
+    setFormValues({ ...formValues, fullDate: startDate, month, year });
+  };
+
   const handleForm = (e) => {
     e.preventDefault();
-    if (formValues.name === '' || formValues.amount === '') return;
+    if (
+      formValues.name === "" ||
+      formValues.amount === "" ||
+      formValues.date === ""
+    )
+      return;
 
     handleSubmit(formValues);
 
-    setFormValues({
-      name: '',
-      amount: '',
-    });
+    resetValues();
   };
+
   return (
     <>
       <div
         className={`relative z-10 ${
-          !open ? 'hidden' : 'flex'
+          !open ? "hidden" : "flex"
         } transition ease-in-out duration-300 delay-75`}
         aria-labelledby="modal-title"
         role="dialog"
@@ -32,9 +68,9 @@ const AddBudgetModal = ({ open, handleCloseModal, handleSubmit }) => {
         <div className="fixed inset-0 bg-gray-500 bg-opacity-30 transition-opacity"></div>
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <div className="relative transform overflow-hidden rounded-lg text-left shadow-xl transition-all sm:my-8 sm:w-60 sm:max-w-lg">
-              <div className="bg-slate-900  h-[700px] sm:h-[320px] overflow-x-hidden overflow-y-hidden">
-                <div className="sm:flex sm:items-start ">
+            <div className="relative transform overflow-visible rounded-lg text-left shadow-xl transition-all sm:my-20 sm:w-[800px] sm:max-w-lg">
+              <div className="bg-slate-900 h-[700px] sm:h-[390px] overflow-visible">
+                <div className="sm:flex sm:items-start">
                   <div className="mt-3 w-full text-center sm:mt-0 p-2 sm:text-left text-gray-300">
                     <div className="flex gap-8 md:gap-5 justify-between items-center px-2 py-2">
                       <div>
@@ -44,7 +80,10 @@ const AddBudgetModal = ({ open, handleCloseModal, handleSubmit }) => {
                       </div>
                       <div
                         title="close"
-                        onClick={handleCloseModal}
+                        onClick={() => {
+                          resetValues();
+                          handleCloseModal();
+                        }}
                         className="cursor-pointer hover:text-red-600 hover:rounded-lg hover:w-6 hover:h-6"
                       >
                         <svg
@@ -76,7 +115,7 @@ const AddBudgetModal = ({ open, handleCloseModal, handleSubmit }) => {
                             name="name"
                             onChange={handleChange}
                             value={formValues.name}
-                            className="bg-slate-900 border-gray-400 border-2 p-2 rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900  focus-within:bg-slate-900"
+                            className="bg-slate-900 border-gray-400 border-2 p-2 w-full rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 focus-within:bg-slate-900"
                             placeholder="Budget Name"
                           />
                         </div>
@@ -91,9 +130,26 @@ const AddBudgetModal = ({ open, handleCloseModal, handleSubmit }) => {
                             name="amount"
                             onChange={handleChange}
                             value={formValues.amount}
-                            className="appearance-none bg-slate-900 border-gray-400 border-2 p-2 rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none
-                            "
+                            className="appearance-none bg-slate-900 border-gray-400 border-2 p-2 w-full rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900 hover:appearance-none"
                             placeholder="Max Amount"
+                          />
+                        </div>
+                        {/* Date */}
+                        <div className="">
+                          <label htmlFor="date" className="text-sm">
+                            Date
+                          </label>
+                          <Datepicker
+                            displayFormat={"MM-YYYY"}
+                            useRange={false}
+                            asSingle={true}
+                            showShortcuts={false}
+                            value={value}
+                            onChange={handleValueChange}
+                            inputClassName="appearance-none bg-slate-900 border-gray-400 border-2 p-2 w-full rounded-md focus:border-green-500 focus:outline-none active:bg-slate-900"
+                            classNames={{
+                              popover: "absolute z-50",
+                            }}
                           />
                         </div>
                         {/* Add */}

@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import AddBudgetModal from './components/AddBudgetModal';
-import AddExpenseModal from './components/AddExpenseModal';
-import BudgetCard from './components/BudgetCard';
-import ExpenseModal from './components/ExpenseModal';
-import SideBarNav from './components/SideBarNav';
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import AddBudgetModal from "./components/AddBudgetModal";
+import AddExpenseModal from "./components/AddExpenseModal";
+import BudgetCard from "./components/BudgetCard";
+import ExpenseModal from "./components/ExpenseModal";
+import SideBarNav from "./components/SideBarNav";
 
 function App() {
-  const LOCAL_STORAGE_KEY = 'budgets';
+  const LOCAL_STORAGE_KEY = "budgets";
   const [viewExpense, setViewExpense] = useState(false);
   const [addBudget, setAddBudget] = useState(false);
   const [addExpense, setAddExpense] = useState(false);
@@ -114,10 +114,13 @@ function App() {
   };
 
   const handleAddBudgetForm = (formValues) => {
-    const { name, amount } = formValues;
+    const { name, amount, fullDate, month, year } = formValues;
     const obj = {
       id: uuidv4(),
       title: name,
+      fullDate,
+      month,
+      year,
       expenses: [],
       budget_total: parseFloat(amount),
       expense_total: 0,
@@ -128,10 +131,11 @@ function App() {
   };
 
   const handleAddExpenseForm = (formValues) => {
-    const { description, amount, budgetID } = formValues;
+    const { description, amount, budgetID, date } = formValues;
     const obj = {
       id: uuidv4(),
       description,
+      date,
       amount: parseFloat(amount),
       budgetID,
     };
@@ -143,8 +147,8 @@ function App() {
         return budget.id === budgetID
           ? {
               ...budget,
-              ['expenses']: [...budget.expenses, obj],
-              ['expense_total']: sum,
+              ["expenses"]: [...budget.expenses, obj],
+              ["expense_total"]: sum,
             }
           : budget;
       })
@@ -163,8 +167,8 @@ function App() {
         return budget.id === budgetID
           ? {
               ...budget,
-              ['expenses']: expenses,
-              ['expense_total']: sum,
+              ["expenses"]: expenses,
+              ["expense_total"]: sum,
             }
           : budget;
       })
@@ -198,9 +202,9 @@ function App() {
           ))}
         </div>
 
-        <div className="w-72 h-20 rounded-full bg-slate-900 fixed bottom-4 right-5 shadow-lg text-gray-400 justify-center flex items-center px-4 text-xl font-bold">
-          <div>Total :</div>
-          <div className="px-4 text-2xl text-gray-300">{`${overallExpenseTotal()} / ${overallBudgetTotal()}`}</div>
+        <div className="w-72 md:w-96 h-16 md:h-20 rounded-full bg-slate-900 fixed bottom-4 right-5 shadow-lg text-gray-400 justify-center flex items-center px-4 text-xl font-bold">
+          <div className="text-lg md:text-xl">Total :</div>
+          <div className="px-4 text-lg md:text-2xl text-gray-300">{`${overallExpenseTotal()} / ${overallBudgetTotal()}`}</div>
         </div>
         <ExpenseModal
           open={viewExpense}
