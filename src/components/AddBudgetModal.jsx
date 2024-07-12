@@ -46,7 +46,7 @@ const AddBudgetModal = ({ open, handleCloseModal, handleSubmit }) => {
     if (
       formValues.name === "" ||
       formValues.amount === "" ||
-      formValues.date === ""
+      formValues.fullDate === ""
     )
       return;
 
@@ -69,7 +69,7 @@ const AddBudgetModal = ({ open, handleCloseModal, handleSubmit }) => {
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <div className="relative transform overflow-visible rounded-lg text-left shadow-xl transition-all sm:my-20 sm:w-[800px] sm:max-w-lg">
-              <div className="bg-slate-900 h-[700px] sm:h-[390px] overflow-visible">
+              <div className="bg-slate-900 h-[390px] md:h-[390px] overflow-visible">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 w-full text-center sm:mt-0 p-2 sm:text-left text-gray-300">
                     <div className="flex gap-8 md:gap-5 justify-between items-center px-2 py-2">
