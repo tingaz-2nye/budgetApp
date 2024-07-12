@@ -1,5 +1,5 @@
 import React from "react";
-import { plusIcon } from "../utils/icons";
+import { PlusIcon } from "../utils/icons";
 
 const SideBarNav = ({ handleOpenBudgetModal }) => {
   return (
@@ -11,7 +11,7 @@ const SideBarNav = ({ handleOpenBudgetModal }) => {
           title="Add Budget"
           onClick={handleOpenBudgetModal}
         >
-          {plusIcon}
+          <PlusIcon />
         </button>
       </div>
     </div>
