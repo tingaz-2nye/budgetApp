@@ -1,5 +1,6 @@
 import React from "react";
 import { PlusIcon } from "../utils/icons";
+import TooltipComponent from "./TooltipComponent";
 
 const SideBarNav = ({ handleOpenBudgetModal }) => {
   return (
@@ -11,7 +12,9 @@ const SideBarNav = ({ handleOpenBudgetModal }) => {
           title="Add Budget"
           onClick={handleOpenBudgetModal}
         >
-          <PlusIcon />
+          <TooltipComponent text={"Add Budget"}>
+            <PlusIcon />
+          </TooltipComponent>
         </button>
       </div>
     </div>
