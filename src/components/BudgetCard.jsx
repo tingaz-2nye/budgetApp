@@ -48,7 +48,7 @@ const BudgetCard = ({
   }, [expense_total, budget_total, expenses]);
 
   return (
-    <div className="w-56 md:w-96 h-36 p-4 rounded-xl shadow-md bg-slate-900 text-gray-300 flex flex-col justify-between">
+    <div className="w-56 md:w-72 xl:w-96 h-36 p-4 rounded-xl shadow-md bg-slate-900 text-gray-300 flex flex-col justify-between">
       <div className="flex items-center">
         <div className="text-xs text-gray-400">
           {new Date(fullDate).toLocaleString("default", {
