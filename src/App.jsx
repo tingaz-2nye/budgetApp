@@ -5,6 +5,8 @@ import AddExpenseModal from "./components/AddExpenseModal";
 import BudgetCard from "./components/BudgetCard";
 import ExpenseModal from "./components/ExpenseModal";
 import SideBarNav from "./components/SideBarNav";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const LOCAL_STORAGE_KEY = "budgets";
@@ -224,6 +226,7 @@ function App() {
           expense={budgets.filter((budget) => budget.id === expenseCategory)[0]}
           handleCloseModal={handleCloseAddExpenseModal}
         />
+        <ToastContainer />
       </div>
     </>
   );
