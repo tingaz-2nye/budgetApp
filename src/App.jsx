@@ -6,7 +6,12 @@ import BudgetCard from "./components/BudgetCard";
 import ExpenseModal from "./components/ExpenseModal";
 import SideBarNav from "./components/SideBarNav";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import "primereact/resources/themes/lara-dark-blue/theme.css"; //theme
+import "primereact/resources/primereact.min.css"; //core css
+import "primeicons/primeicons.css";
+import { toast, ToastContainer } from "react-toastify";
+import { ConfirmDialog } from "primereact/confirmdialog";
+import { confirmDialog } from "primereact/confirmdialog";
 
 function App() {
   const LOCAL_STORAGE_KEY = "budgets";
@@ -159,11 +164,21 @@ function App() {
   };
 
   const handleDeleteExpense = (id, budgetID) => {
+    confirmDialog({
+      message: "Are you sure you want to delete?",
+      header: "Confirmation",
+      icon: "pi pi-exclamation-triangle",
+      acceptClassName: "p-button-danger p-2",
+      rejectClassName: "p-2 mr-2",
+      accept: () => deleteExpense(id, budgetID),
+      reject: () => rejectFunc("Item not deleted"),
+    });
+  };
+
+  const deleteExpense = (id, budgetID) => {
     const expense = budgets.filter((budget) => budget.id === budgetID)[0];
     const expenses = expense.expenses.filter((exp) => exp.id !== id);
-
     const sum = addSum({ budgetID, isSum: false, id });
-
     setBudgets(
       budgets.map((budget) => {
         return budget.id === budgetID
@@ -175,11 +190,29 @@ function App() {
           : budget;
       })
     );
+    return toast.success("Item deleted successfully");
+  };
+
+  const rejectFunc = (text) => {
+    return toast.info(text);
   };
 
   const handleDeleteBudget = (id) => {
+    confirmDialog({
+      message: "Are you sure you want to delete?",
+      header: "Confirmation",
+      icon: "pi pi-exclamation-triangle",
+      acceptClassName: "p-button-danger p-2",
+      rejectClassName: "p-2 mr-2",
+      accept: () => deleteBudget(id),
+      reject: () => rejectFunc("Cancelled Budget deletion"),
+    });
+  };
+
+  const deleteBudget = (id) => {
     const newBudgets = budgets.filter((budget) => budget.id !== id);
     setBudgets(newBudgets);
+    return toast.success("Budget deleted successfully");
   };
 
   useEffect(() => {
@@ -227,6 +260,7 @@ function App() {
           handleCloseModal={handleCloseAddExpenseModal}
         />
         <ToastContainer />
+        <ConfirmDialog />
       </div>
     </>
   );
